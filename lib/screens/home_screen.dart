@@ -17,13 +17,14 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     apiService = ApiService();
+    apiService.getMoreImages();
 
     _scrollController.addListener(() {
       print(_scrollController.position.pixels);
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         //if we are at the bottom of the page
-        apiService.getImages(2);
+        apiService.getMoreImages();
       }
     });
     super.initState();

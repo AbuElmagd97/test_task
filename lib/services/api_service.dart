@@ -4,10 +4,11 @@ import 'package:testtask/config.dart';
 import 'package:testtask/model/img.dart';
 
 class ApiService {
-  Future<List<Img>> getImages(int page) async {
+  Future<List<Img>> getImages([int page = 1]) async {
+    int _perPage = 100;
     List<Img> data = List<Img>();
     try {
-      String url = "${Config.baseUrl}$page";
+      String url = "${Config.baseUrl}$page&limit=$_perPage";
       var response = await Dio().get(
         url,
         options: Options(
@@ -17,11 +18,20 @@ class ApiService {
         ),
       );
       if (response.statusCode == 200) {
-        data = (response.data as List).map((e) => Img.fromJson(e)).toList();
+        data = (response.data as List)
+            .map(
+              (i) => Img.fromJson(i),
+        )
+            .toList();
       }
     } on DioError catch (e) {
       print(e.response);
     }
     return data;
+  }
+  getMoreImages() {
+    for(int i = 0; i< 100; i++){
+      getImages();
+    }
   }
 }
