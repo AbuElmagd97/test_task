@@ -27,10 +27,11 @@ class ApiService {
     } on DioError catch (e) {
       print(e.response);
     }
+
     return data;
   }
   getMoreImages() {
-    for(int i = 0; i< 1000; i++){
+    for(int i = 0; i< 100; i++){
       getImages();
     }
   }
